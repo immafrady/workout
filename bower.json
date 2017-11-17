@@ -1,0 +1,23 @@
+{
+  "name": "workout",
+  "description": "Keep record of my own works",
+  "main": "index.js",
+  "authors": [
+    "Frady"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "workout"
+  ],
+  "homepage": "https://github.com/immafrady/workout",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
