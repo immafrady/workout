@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>001 JD Sidebar with Scroll Effect</title>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body,html{
+            width: 100%;
+            height: 100%;
+            font-size:10px;
+        }
+        aside{
+            position: fixed;
+            left:20px;
+            top:50%;
+            transform:translateY(-50%);
+        }
+        aside ul li{
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            font-size:1.2em;
+            border:1px black solid;
+        }
+        aside ul li span:last-child{
+            display: none;
+        }
+        .clicked{
+            background-color: #00aa00;
+        }
+        .clicked span:first-child{
+            display: none;
+        }
+        .clicked span:last-child{
+            display: inherit;
+        }
+
+        article{
+            display: flex;
+            flex-direction: column;
+            width:75%;
+            margin: 0 auto;
+        }
+        article section{
+            height:750px;
+            margin-top: 1%;
+            border-radius:1%;
+            border:solid 2px dimgrey;
+        }
+        article section:nth-child(odd){
+            background-color: #228833;
+        }
+        article section:nth-child(even){
+            background-color: #992299;
+        }
+        h1{
+            font-size:2em;
+            font-weight: bold;
+        }
+        p{
+            font-size:1.5em;
+        }
+    </style>
+</head>
+<body>
+<aside>
+    <ul>
+    </ul>
+</aside>
+<main>
+    <article>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+
+        <section>
+            <h1>嘻嘻</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aspernatur cum delectus, doloribus ducimus eum facilis id, illo itaque modi natus nobis nostrum nulla quia quis sequi ullam veritatis. Asperiores!</p>
+        </section>
+        <section>
+            <h1>哈哈</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam animi deserunt enim eum ex inventore molestias neque non nostrum odit pariatur qui, quibusdam quo sequi soluta totam, veritatis voluptatibus?</p>
+        </section>
+        <section>
+            <h1>法法</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, animi aperiam, at autem blanditiis corporis est incidunt iste, omnis reiciendis repudiandae totam! Accusamus eaque eius ex minus omnis rem repellat!</p>
+        </section>
+        <section>
+            <h1>拉拉</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos itaque perferendis soluta ullam velit, veniam. Aperiam aspernatur culpa enim expedita iste iusto, natus nulla obcaecati pariatur, perferendis quia soluta tempora.</p>
+        </section>
+        <section>
+            <h1>卡卡</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium autem beatae cum distinctio eum excepturi ipsam iste laudantium nobis numquam officia praesentium reiciendis reprehenderit sint temporibus ut, voluptas. Eligendi!</p>
+        </section>
+        <section>
+            <h1>哟哟</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias aperiam at, commodi consequuntur dignissimos distinctio exercitationem hic in nam natus nisi officia possimus, quam quos reprehenderit, sequi tempora velit?</p>
+        </section>
+        <section>
+            <h1>呵呵</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid animi asperiores cum distinctio eaque enim error eveniet, explicabo fugit illo labore nulla officia perspiciatis, quae quos ratione sed sunt vitae.</p>
+        </section>
+        <section>
+            <h1>她答</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias debitis error exercitationem explicabo illum ipsum, optio sit voluptate? Ad cumque debitis deserunt distinctio ea nulla quas reprehenderit voluptate voluptatem.</p>
+        </section>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+        <h1>哟哟</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto atque doloribus et exercitationem incidunt iste minus nisi nulla odio omnis placeat possimus, saepe soluta voluptatum? Consequatur dolores ipsum perspiciatis.</p>
+
+    </article>
+</main>
+
+
+<script src="./../bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+    //每个盒子的对天高度；
+    let  distanceTop = [];
+    function whereAmI(){
+        let toTopValue = $(window).scrollTop();
+        let $section = $('main article section');
+        let topLeft = distanceTop[0] - $section.eq(0).height()/2;
+        let downLeft = distanceTop[distanceTop.length-1] + $('main article section:last').height()/2;
+        if (toTopValue < topLeft || toTopValue > downLeft) {
+            $('aside li').removeClass('clicked')
+        } else {
+            for (let i=0;i<=distanceTop.length-1;i++) {
+                if (toTopValue >= distanceTop[i] - $section.eq(i).height()/2) {
+                    $('aside li').eq(i)
+                        .addClass('clicked')
+                        .siblings()
+                        .removeClass('clicked')
+                }
+            }
+        }
+    }
+    $(function(){
+        $('section').each(function (i) {
+            let title = $(this).children('h1').text();
+            let level = i + 1;
+            $('aside ul').append('<li><span>'+ level + 'F</span><span>' + title + '</span></li>');
+            distanceTop.push($(this).offset().top);
+        });
+        whereAmI();
+    });
+    //点击链接
+    $('aside').on('click','li',function(){
+        var index = $('aside li').index($(this));
+//        console.log(index);
+//        $(this).addClass('clicked');
+//        $(this).siblings().removeClass('clicked');
+        $('html').stop().animate({
+            scrollTop:distanceTop[index]
+        },500)
+    });
+    //滚动条
+    $(window).on('scroll',function(){
+//        console.log(distanceTop);
+        whereAmI()
+//        console.log(toTopValue)
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>002 Disable Paste Function on Input Label</title>
+</head>
+<body>
+<p>Please copy me, then paste me to the Input box below</p>
+<input id="inputBox" type="text">
+<script src="./../bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+    $('#inputBox').on('mousedown',function(event){
+       if (event.button === 2 && event.buttons ===2){
+           event.preventDefault();
+       }
+    });
+    $('#inputBox').on('keydown',function (event) {
+        console.log(event);
+        if (event.ctrlKey && event.originalEvent.code === 'KeyV'){
+            return false;
+        }
+    })
+</script>
+</body>
+</html>

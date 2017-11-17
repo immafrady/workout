@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>003 Hit the Balloon</title>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
+    <style>
+
+        body,html {
+            width: 100%;
+            height: 100%;
+            background: url("./src/003/bg.jpg") no-repeat;
+            background-size: cover;
+            overflow: hidden;
+        }
+        h1 {
+            font-weight: bold;
+            font-size: 30px;
+            color: #f8f8f8;
+        }
+        h1 span {
+            color: #aa0000;
+        }
+        .confirmBox{
+            background-color: #CCCCCC;
+            border: 1px solid darkgoldenrod;
+            width: 40%;
+            height: 30%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .confirmBox h2{
+            font-size: 25px;
+            text-align: center;
+            margin-top: 10%;
+        }
+        .yesOrNo{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding-top: 5%;
+            font-size: 20px;
+        }
+        .yesOrNo input{
+            padding: 10px 30px;
+            margin: 0 10px;
+            border: 1px solid #008800;
+        }
+        .balloon{
+            position: absolute;
+            background: url("./src/003/balloon.png") no-repeat;
+            top:100%;
+            width: 82px;
+            height: 115px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Your Score: <span id="score"></span></h1>
+<h1>Time Left: <span id="timer"></span></h1>
+<div class="balloon"></div>
+<div class="confirmBox">
+    <h2>Let's Get Start!</h2>
+    <div class="yesOrNo">
+        <input type="submit" id="yes" value="GO!">
+        <input type="submit" id="no" value="Nah.">
+    </div>
+</div>
+<script src="./../bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+    function MathC(value){
+        return Math.ceil(Math.random()*value);
+    }
+    function MathF(value){
+        return Math.floor(Math.random()*value);
+    }
+    const balloons = [
+        {
+            score:1,
+            bgX:'0px',
+            speed:1
+        },{
+            score:2,
+            bgX:'-81px',
+            speed:1.5
+        },{
+            score:3,
+            bgX:'-162px',
+            speed:2
+        },{
+            score:4,
+            bgX:'-244px',
+            speed:2.5
+
+        },{
+            score:5,
+            bgX:'-324px',
+            speed:3
+        },{
+            score:6,
+            bgX:'-405px',
+            speed:3.5
+        },{
+            score:7,
+            bgX:'-487px',
+            speed:4
+        },{
+            score:8,
+            bgX:'-569px',
+            speed:4.5
+        },{
+            score:function(v){
+                return v*2;
+            },
+            bgX:'-651px',
+            speed:function(){
+                return (Math.random()*5).toFixed(1)
+            }
+        },{
+            score:function(v){
+                return v/2;
+            },
+            bgX:'-732px',
+            speed:function(){
+                return (Math.random()*5).toFixed(1);
+            }
+        },{
+            score:function(v){
+                return 0;
+            },
+            bgX:'-812px',
+            speed:function(){
+                return (Math.random()*5).toFixed(1);
+            }
+        },{
+            score:function(v){
+                var rnd = Math.floor(Math.random()*11);
+                return balloons[rnd].score;
+            },
+            bgX:'-894px',
+            speed:function(){
+                return (Math.random()*5).toFixed(1);
+            }
+        }
+    ];
+
+    //球
+    function Balloon(){
+        var that = this;
+        var n = MathF(12);  //原来用 this.n
+        var b = balloons[n]; //原来用 this.n
+        this.left = Math.random()*100 + '%';
+        this.speed = b.speed;
+
+//        var score = this.score();
+        this.init();
+        this.move()
+    };
+    Balloon.prototype.init = function(){
+        var score = b.score();
+        this.dom = $('<div></div>').addClass('balloon').css({
+            'background-position-x':this.b.bgX,
+            'left':this.left
+        }).appendTo('body');
+        this.dom.on('click',function(){
+
+        })
+    };
+    Balloon.prototype.expl = function(){
+        clearInterval(this.timer);
+        this.dom.remove();
+    };
+//    Balloon.prototype.score = function(a){
+//        //检测是否为function
+//        if (typeof this.b.score = 'function'){
+//            return this.b.score(a)
+//        } else {
+//            return this.b.score
+//        }
+//    };
+
+    var timer = setInterval(function(){
+
+    });
+
+    //点击后以后变字
+    $('#yes').one('click',function(){
+        $('.confirmBox h2').text('Do You Want To Play Again?')
+    })
+
+    //todo localStorage储存数据，记得用json格式
+</script>
+</body>
+</html>
