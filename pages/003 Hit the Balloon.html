@@ -73,6 +73,7 @@
 </div>
 <script src="./../bower_components/jquery/dist/jquery.min.js"></script>
 <script>
+    var point = 0;
     function MathC(value){
         return Math.ceil(Math.random()*value);
     }
@@ -153,20 +154,23 @@
     function Balloon(){
         var that = this;
         var n = MathF(12);  //原来用 this.n
-        var b = balloons[n]; //原来用 this.n
+        this.b = balloons[n]; //原来用 this.n
         this.left = Math.random()*100 + '%';
-        this.speed = b.speed;
-
+        this.speed = this.b.speed;
+        this.sr = this.b.score;
 //        var score = this.score();
         this.init();
-        this.move()
+        this.score(point);
+        console.log(point);
+//        this.move();
     };
     Balloon.prototype.init = function(){
-        var score = b.score();
+//        console.log(this.b);
         this.dom = $('<div></div>').addClass('balloon').css({
             'background-position-x':this.b.bgX,
             'left':this.left
         }).appendTo('body');
+        this.score()
         this.dom.on('click',function(){
 
         })
@@ -175,14 +179,18 @@
         clearInterval(this.timer);
         this.dom.remove();
     };
-//    Balloon.prototype.score = function(a){
-//        //检测是否为function
-//        if (typeof this.b.score = 'function'){
-//            return this.b.score(a)
-//        } else {
-//            return this.b.score
-//        }
-//    };
+    Balloon.prototype.score = function(value){
+        //检测是否为function
+        if (typeof this.b.score === 'function'){
+
+//            console.log(this.b.score);
+            return this.b.score(value)
+        } else {
+            value += this.b.score;
+            console.log(value);
+            return value;
+        }
+    };
 
     var timer = setInterval(function(){
 
