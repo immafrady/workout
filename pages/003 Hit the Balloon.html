@@ -13,6 +13,7 @@
             background: url("./src/003/bg.jpg") no-repeat;
             background-size: cover;
             overflow: hidden;
+            user-select: none;
         }
         h1 {
             font-weight: bold;
@@ -20,13 +21,13 @@
             color: #f8f8f8;
         }
         h1 span {
-            color: #aa0000;
+            color: #ff0000;
         }
         .confirmBox{
-            background-color: #CCCCCC;
+            background-color: #aaaaaa;
             border: 1px solid darkgoldenrod;
-            width: 40%;
-            height: 30%;
+            min-width: 700px;
+            min-height: 400px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -37,23 +38,35 @@
             text-align: center;
             margin-top: 10%;
         }
-        .yesOrNo{
+        .gameOn{
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            padding-top: 5%;
+            margin-top: 5%;
             font-size: 20px;
         }
-        .yesOrNo input{
-            padding: 10px 30px;
+        input{
+            padding: 0 20px;
             margin: 0 10px;
             border: 1px solid #008800;
+        }
+        .recBox{
+            margin-top: 5%;
+            display: flex;
+            justify-content: center;
+        }
+        .finalScore{
+            display: none;
+            margin-top: 10%;
+        }
+        .finalScore h1{
+            text-align: center;
         }
         .balloon{
             position: absolute;
             background: url("./src/003/balloon.png") no-repeat;
-            top:50%;  /*记得改回100%*/
+            top:100%;  /*记得改回100%*/
             width: 82px;
             height: 115px;
             cursor: pointer;
@@ -61,19 +74,30 @@
     </style>
 </head>
 <body>
-<h1>Your Score: <span id="score"></span></h1>
-<h1>Time Left: <span id="timer"></span></h1>
+<h1>Your Score: <span class="score">0</span></h1>
+<h1>Time Left: <span id="timer">30</span>s</h1>
 <div class="confirmBox">
-    <h2>Let's Get Start!</h2>
-    <div class="yesOrNo">
+    <h2>Let's Get Started!</h2>
+    <div class="gameOn">
+        <label>
+            Level:
+            <select name="level" id="level">
+                <option value="1">easy</option>
+                <option value="3">medium</option>
+                <option value="6">hard</option>
+                <option value="9">hell</option>
+            </select>
+        </label>
         <input type="submit" id="yes" value="GO!">
-        <input type="submit" id="no" value="Nah.">
+    </div>
+    <div class="recBox"><input type="submit" id="rec" value="Records"></div>
+    <div class="finalScore">
+        <h1>Your final score is <span class="score"></span></h1>
     </div>
 </div>
 <script src="./../bower_components/jquery/dist/jquery.min.js"></script>
 <script>
-    var point = 1;
-
+    var point,select;
     //随机一个整数random
     function Rnd(value){
         this.value = value;
@@ -84,12 +108,7 @@
     Rnd.prototype.ceil = function(){
         return Math.ceil(Math.random()*this.value)
     };
-//    function MathC(value){
-//        return Math.ceil(Math.random()*value);
-//    }
-//    function MathF(value) {
-//        return Math.floor(Math.random() * value);
-//    }
+
 
     //球的值
     const balloons = [
@@ -123,46 +142,46 @@
             index:5,
             score:6,
             bgX:'-405px',
-            speed:3.5
+            speed:4
         },{
             index:6,
             score:7,
             bgX:'-487px',
-            speed:4
+            speed:5
         },{
             index:7,
             score:8,
             bgX:'-569px',
-            speed:4.5
+            speed:6
         },{
             index:8,
-            score:function(v){
-                return v*2;
-            },
-            bgX:'-651px',
-            speed:function(){
-                return (Math.random()*5).toFixed(1)
-            }
-        },{
-            index:9,
             score:function(v){
                 v/=2;
                 v = Math.ceil(v);
                 return v;
             },
+            bgX:'-651px',
+            speed:(function(){
+                return (Math.random()*3+3).toFixed(1)
+            })()
+        },{
+            index:9,
+            score:function(v){
+                return v*2;
+            },
             bgX:'-732px',
-            speed:function(){
-                return (Math.random()*5).toFixed(1);
-            }
+            speed:(function(){
+                return (Math.random()*3+3).toFixed(1);
+            })()
         },{
             index:10,
             score:function(){
                 return 0;
             },
             bgX:'-812px',
-            speed:function(){
-                return (Math.random()*5).toFixed(1);
-            }
+            speed:(function(){
+                return (Math.random()*6).toFixed(1);
+            })()
         },{
             index:11,
             score:function(v){
@@ -176,9 +195,9 @@
                 }
             },
             bgX:'-894px',
-            speed:function(){
-                return (Math.random()*5).toFixed(1);
-            }
+            speed:(function(){
+                return (Math.random()*6).toFixed(1);
+            })()
         }
     ];
 
@@ -204,41 +223,75 @@
             'background-position-x':this.b.bgX,
             'left':this.left
         }).appendTo('body');
+        this.up();
 
         this.dom.on('click',function(){
-            //到底score该指向哪里？
-            point = that.score(point);
-            console.log(point)//记得一定要赋值
+            point = that.score(point);  //记得一定要赋值
+            $('.score').text(point);
+            that.pop();
         })
     };
-    Balloon.prototype.expl = function(){
+    //炸
+    Balloon.prototype.pop = function(){
         clearInterval(this.timer);
         this.dom.remove();
     };
+    //飞
+    Balloon.prototype.up = function(){
+        var speed = this.speed;
+        var that = this;
+        this.timer = setInterval(function () {
+            that.dom.css({
+                top:function(i,v){
+                    return (parseInt(v)-speed*select)+'px'
+                }
+            });
+            if (parseInt(that.dom.css('top')) < 0){
+                that.pop();
+                clearInterval(this.timer)
+            }
+        },20)
+    };
+    //分
     Balloon.prototype.score = function(value){
-        //检测是否为function
-//        console.log(`The value is ${value}`);
         if (typeof this.b.score === 'function'){
-//            console.log(`this Score is : ${this.b.score}`);
-//            console.log(`Now the value is ${value}`);
             value = this.b.score(value);
             return value
         } else {
             value += this.b.score;
-//            console.log(`this Score is : ${this.b.score}`);
-//            console.log(`Now the value is ${value}`);
             return value
         }
     };
 
-    var timer = setInterval(function(){
+    //循环计数
+    $('#yes').on('click',function(){
+        $('.confirmBox').hide();
+        var count = 0;
+        point = 0;
+        select = $('#level').find('option:selected').val();
+//        console.log(select);
+        var clock = 30;
 
+        var timer = setInterval(function(){
+            count++;
+            if (count%2===0){
+                clock--;
+                $('#timer').text(clock);
+            }
+            if (clock ===0){
+                clearInterval(timer);
+                setTimeout(function () {
+                    $('.balloon').remove()
+                },200);
+                $('.finalScore').show();
+                $('.confirmBox').show();
+            }
+            new Balloon();
+        },500);
+    }).one('click',function(){
+        $('.confirmBox h2').text("Let's Play Again!!")
     });
-
     //点击后以后变字
-    $('#yes').one('click',function(){
-        $('.confirmBox h2').text('Do You Want To Play Again?')
-    })
 
     //todo localStorage储存数据，记得用json格式
 </script>
