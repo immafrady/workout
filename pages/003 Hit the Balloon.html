@@ -53,7 +53,7 @@
         .balloon{
             position: absolute;
             background: url("./src/003/balloon.png") no-repeat;
-            top:100%;
+            top:50%;  /*记得改回100%*/
             width: 82px;
             height: 115px;
             cursor: pointer;
@@ -63,7 +63,6 @@
 <body>
 <h1>Your Score: <span id="score"></span></h1>
 <h1>Time Left: <span id="timer"></span></h1>
-<div class="balloon"></div>
 <div class="confirmBox">
     <h2>Let's Get Start!</h2>
     <div class="yesOrNo">
@@ -73,48 +72,70 @@
 </div>
 <script src="./../bower_components/jquery/dist/jquery.min.js"></script>
 <script>
-    var point = 0;
-    function MathC(value){
-        return Math.ceil(Math.random()*value);
+    var point = 1;
+
+    //随机一个整数random
+    function Rnd(value){
+        this.value = value;
     }
-    function MathF(value){
-        return Math.floor(Math.random()*value);
-    }
+    Rnd.prototype.floor = function(){
+        return Math.floor(Math.random()*this.value)
+    };
+    Rnd.prototype.ceil = function(){
+        return Math.ceil(Math.random()*this.value)
+    };
+//    function MathC(value){
+//        return Math.ceil(Math.random()*value);
+//    }
+//    function MathF(value) {
+//        return Math.floor(Math.random() * value);
+//    }
+
+    //球的值
     const balloons = [
         {
+            index:0,
             score:1,
             bgX:'0px',
             speed:1
         },{
+            index:1,
             score:2,
             bgX:'-81px',
             speed:1.5
         },{
+            index:2,
             score:3,
             bgX:'-162px',
             speed:2
         },{
+            index:3,
             score:4,
             bgX:'-244px',
             speed:2.5
 
         },{
+            index:4,
             score:5,
             bgX:'-324px',
             speed:3
         },{
+            index:5,
             score:6,
             bgX:'-405px',
             speed:3.5
         },{
+            index:6,
             score:7,
             bgX:'-487px',
             speed:4
         },{
+            index:7,
             score:8,
             bgX:'-569px',
             speed:4.5
         },{
+            index:8,
             score:function(v){
                 return v*2;
             },
@@ -123,15 +144,19 @@
                 return (Math.random()*5).toFixed(1)
             }
         },{
+            index:9,
             score:function(v){
-                return v/2;
+                v/=2;
+                v = Math.ceil(v);
+                return v;
             },
             bgX:'-732px',
             speed:function(){
                 return (Math.random()*5).toFixed(1);
             }
         },{
-            score:function(v){
+            index:10,
+            score:function(){
                 return 0;
             },
             bgX:'-812px',
@@ -139,9 +164,16 @@
                 return (Math.random()*5).toFixed(1);
             }
         },{
+            index:11,
             score:function(v){
                 var rnd = Math.floor(Math.random()*11);
-                return balloons[rnd].score;
+                var bs = balloons[rnd].score;
+                if (typeof bs === 'number'){
+                    v += 2*bs;
+                    return v
+                } else {
+                    return bs(v);
+                }
             },
             bgX:'-894px',
             speed:function(){
@@ -152,27 +184,31 @@
 
     //球
     function Balloon(){
-        var that = this;
-        var n = MathF(12);  //原来用 this.n
+        var rnd = new Rnd(12);
+        var n = rnd.floor();  //原来用 this.n
+
         this.b = balloons[n]; //原来用 this.n
         this.left = Math.random()*100 + '%';
         this.speed = this.b.speed;
-        this.sr = this.b.score;
+
 //        var score = this.score();
         this.init();
-        this.score(point);
-        console.log(point);
+
 //        this.move();
-    };
+    }
+    //初始化气球
     Balloon.prototype.init = function(){
 //        console.log(this.b);
+        var that = this;
         this.dom = $('<div></div>').addClass('balloon').css({
             'background-position-x':this.b.bgX,
             'left':this.left
         }).appendTo('body');
-        this.score()
-        this.dom.on('click',function(){
 
+        this.dom.on('click',function(){
+            //到底score该指向哪里？
+            point = that.score(point);
+            console.log(point)//记得一定要赋值
         })
     };
     Balloon.prototype.expl = function(){
@@ -181,14 +217,17 @@
     };
     Balloon.prototype.score = function(value){
         //检测是否为function
+//        console.log(`The value is ${value}`);
         if (typeof this.b.score === 'function'){
-
-//            console.log(this.b.score);
-            return this.b.score(value)
+//            console.log(`this Score is : ${this.b.score}`);
+//            console.log(`Now the value is ${value}`);
+            value = this.b.score(value);
+            return value
         } else {
             value += this.b.score;
-            console.log(value);
-            return value;
+//            console.log(`this Score is : ${this.b.score}`);
+//            console.log(`Now the value is ${value}`);
+            return value
         }
     };
 
