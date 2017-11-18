@@ -23,15 +23,24 @@
         h1 span {
             color: #ff0000;
         }
-        .confirmBox{
+        section{
             background-color: #aaaaaa;
             border: 1px solid darkgoldenrod;
-            min-width: 700px;
-            min-height: 400px;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
+        }
+        input[type="submit"]{
+            padding: 0 20px;
+            margin: 0 10px;
+            border: 1px solid #008800;
+        }
+
+        /*初始盒子*/
+        .confirmBox{
+            min-width: 700px;
+            min-height: 400px;
         }
         .confirmBox h2{
             font-size: 25px;
@@ -46,11 +55,6 @@
             margin-top: 5%;
             font-size: 20px;
         }
-        input{
-            padding: 0 20px;
-            margin: 0 10px;
-            border: 1px solid #008800;
-        }
         .recBox{
             margin-top: 5%;
             display: flex;
@@ -63,6 +67,28 @@
         .finalScore h1{
             text-align: center;
         }
+        /*输入名字*/
+        .inputName{
+            display: none;
+            height: 200px;
+            min-width: 450px;
+        }
+        .inputName div{
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .inputName div form{
+            height:150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        /*球*/
         .balloon{
             position: absolute;
             background: url("./src/003/balloon.png") no-repeat;
@@ -75,8 +101,8 @@
 </head>
 <body>
 <h1>Your Score: <span class="score">0</span></h1>
-<h1>Time Left: <span id="timer">30</span>s</h1>
-<div class="confirmBox">
+<h1>Time Left: <span id="timer"></span>s</h1>
+<section class="confirmBox">
     <h2>Let's Get Started!</h2>
     <div class="gameOn">
         <label>
@@ -94,7 +120,19 @@
     <div class="finalScore">
         <h1>Your final score is <span class="score"></span></h1>
     </div>
-</div>
+</section>
+<section class="inputName">
+    <div>
+        <h1>Game is Over!</h1>
+        <form action="" id="result">
+            <input type="hidden" name="level" id="selectLevel">
+            <input type="hidden" name="score" value="0" id="score">
+            <label>Please enter your name<br><input type="text" id="name"></label>
+            <input type="submit" value="Submit" id="resultSubmit">
+        </form>
+
+    </div>
+</section>
 <script src="./../bower_components/jquery/dist/jquery.min.js"></script>
 <script>
     var point,select;
@@ -227,6 +265,7 @@
 
         this.dom.on('click',function(){
             point = that.score(point);  //记得一定要赋值
+            $('#score').val(point);
             $('.score').text(point);
             that.pop();
         })
@@ -240,15 +279,16 @@
     Balloon.prototype.up = function(){
         var speed = this.speed;
         var that = this;
-        this.timer = setInterval(function () {
+        console.log(select.val());
+        var ownTimer = setInterval(function () {
             that.dom.css({
                 top:function(i,v){
-                    return (parseInt(v)-speed*select)+'px'
+                    return (parseInt(v)-speed*select.val())+'px'
                 }
             });
             if (parseInt(that.dom.css('top')) < 0){
                 that.pop();
-                clearInterval(this.timer)
+                clearInterval(ownTimer)
             }
         },20)
     };
@@ -264,12 +304,15 @@
     };
 
     //循环计数
-    $('#yes').on('click',function(){
+    $('#yes').one('click',function(){
+        $('.confirmBox h2').text("Let's Play Again!!")
+    }).on('click',function(){
         $('.confirmBox').hide();
+        select = $('#level').find('option:selected');
+        $('#selectLevel').val(select.text());
         var count = 0;
         point = 0;
-        select = $('#level').find('option:selected').val();
-//        console.log(select);
+
         var clock = 30;
 
         var timer = setInterval(function(){
@@ -284,14 +327,26 @@
                     $('.balloon').remove()
                 },200);
                 $('.finalScore').show();
-                $('.confirmBox').show();
+                $('.inputName').show();
             }
             new Balloon();
         },500);
-    }).one('click',function(){
-        $('.confirmBox h2').text("Let's Play Again!!")
     });
-    //点击后以后变字
+    //提交成绩
+    $('#resultSubmit').on('click',function (e) {
+        console.log('hey');
+        var result = $('#score').val();
+        var option = $('#selectLevel').val();
+        var name = $('#name').val();
+        if (name === ''){
+            $('#name').val('无名氏')
+        }
+        console.log(option,name,result);
+        $('.inputName').hide();
+        $('.confirmBox').show();
+        e.preventDefault();
+    })
+
 
     //todo localStorage储存数据，记得用json格式
 </script>
