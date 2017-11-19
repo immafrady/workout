@@ -137,15 +137,22 @@
 <script>
     var point,select;
     //随机一个整数random
-    function Rnd(value){
-        this.value = value;
+    function Rnd(step,base){
+        if (typeof step !== 'number') throw new Error('Please enter a number!');
+        if (typeof base === 'number' || typeof base === 'string') {this.base = Number(base)} else if(typeof base === 'undefined'){this.base = 0};
+        this.step = step;
     }
     Rnd.prototype.floor = function(){
-        return Math.floor(Math.random()*this.value)
+        return Math.floor(Math.random()*this.step+this.base)
     };
     Rnd.prototype.ceil = function(){
-        return Math.ceil(Math.random()*this.value)
+        return Math.ceil(Math.random()*this.step+this.base)
     };
+    Rnd.prototype.toFixed = function(fix){
+        if (typeof fix !== 'number') throw new Error('Please enter a number!');
+        return (Math.random()*this.step+this.base).toFixed(fix)
+    }
+    //todo 替换下面所有Math.random()
 
 
     //球的值
