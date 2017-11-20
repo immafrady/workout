@@ -90,9 +90,60 @@
         /*得分榜*/
         .leaderboard{
             display: none;
+            text-align: center;
+            justify-content: space-between;
             min-height: 400px;
-            min-width: 500px;
+            max-height: 85%;
+            width: 600px;
         }
+        .board ul{
+            font-size: 15px;
+            height: 300px;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+        }
+        .board ul li{
+            display: flex;
+            width: 480px;
+            flex-direction: row;
+            justify-content:space-around;
+            color: #888888;
+            margin: 0 auto;
+        }
+        .board ul li:first-child{
+            font-size: 20px;
+            color: #000000;
+        }
+        .board ul li:nth-child(2){
+            font-size: 18px;
+            color: #ff0000;
+        }
+        .board ul li:nth-child(3){
+            font-size: 18px;
+            color: #aa0000;
+        }
+        .board ul li:nth-child(4){
+            font-size: 18px;
+            color: #660000;
+        }
+        .board ul li:nth-child(2){
+            color: #ff0000;
+        }
+        .board ul li div:first-child{
+            flex: 1;
+        }
+        .board ul li div:nth-child(2){
+            flex: 3;
+        }
+        .board ul li div:last-child{
+            text-align: right;
+            flex: 5;
+        }
+        .optionBox{
+            margin-top: 20px;
+        }
+
         /*球*/
         .balloon{
             position: absolute;
@@ -121,7 +172,7 @@
         </label>
         <input type="submit" id="yes" value="GO!">
     </div>
-    <div class="recBox"><input type="submit" id="rec" value="Records"></div>
+    <div class="recBox"><input type="submit" id="rec" value="Leaderboard"></div>
     <div class="finalScore">
         <h1>Your final score is <span class="score"></span></h1>
     </div>
@@ -138,9 +189,15 @@
     </div>
 </section>
 <section class="leaderboard">
-    <h1>Level <span class=""></span>'s Leaderboard</h1>
+    <h1>Level <span id="boardType"></span>'s Leaderboard</h1>
     <div class="board">
-        <ul></ul>
+        <ul>
+            <li><div>Rank</div><div>Name</div><div>Score</div></li>
+        </ul>
+    </div>
+    <div class="optionBox">
+        <input type="submit" value="确定" id="back">
+        <input type="submit" value="清除" id="clear">
     </div>
 </section>
 <script src="./../bower_components/jquery/dist/jquery.min.js"></script>
@@ -422,6 +479,31 @@
         $('.inputName').hide();
         $('.confirmBox').show();
         e.preventDefault();
+    })
+
+    //leaderboard
+    $('#rec').on('click',function(){
+        var level = $('#level').find('option:selected').text();
+        $('#boardType').text(level);
+        if (localStorage[level] !== undefined){
+            var leaderboard = JSON.parse(localStorage[level]);
+            for (var i in leaderboard){
+                var n = Number(i) + 1;
+                $('<li><div>'+ n +'</div><div>'+ leaderboard[i].name+'</div><div>'+ leaderboard[i].score +'</div></li>').appendTo('.board ul')
+            }
+        }
+
+
+        $('.confirmBox').hide();
+        $('.leaderboard').show()
+    });
+    $('#back').on('click',function(){
+        $('.confirmBox').show();
+        $('.leaderboard').hide()
+    });
+    $('#clear').on('click',function(){
+        localStorage.clear();
+        $('.board ul:not(:first-child)').remove();
     })
 </script>
 </body>
