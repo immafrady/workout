@@ -87,7 +87,12 @@
             flex-direction: column;
             justify-content: space-around;
         }
-
+        /*得分榜*/
+        .leaderboard{
+            display: none;
+            min-height: 400px;
+            min-width: 500px;
+        }
         /*球*/
         .balloon{
             position: absolute;
@@ -109,9 +114,9 @@
             Level:
             <select name="level" id="level">
                 <option value="1">easy</option>
-                <option value="3">medium</option>
-                <option value="6">hard</option>
-                <option value="9">hell</option>
+                <option value="2">medium</option>
+                <option value="4">hard</option>
+                <option value="6">hell</option>
             </select>
         </label>
         <input type="submit" id="yes" value="GO!">
@@ -127,142 +132,184 @@
         <form action="" id="result">
             <input type="hidden" name="level" id="selectLevel">
             <input type="hidden" name="score" value="0" id="score">
-            <label>Please enter your name<br><input type="text" id="name"></label>
+            <label>Please enter your name<br><input type="text" id="name" name="name" value="无名氏"></label>
             <input type="submit" value="Submit" id="resultSubmit">
         </form>
-
+    </div>
+</section>
+<section class="leaderboard">
+    <h1>Level <span class=""></span>'s Leaderboard</h1>
+    <div class="board">
+        <ul></ul>
     </div>
 </section>
 <script src="./../bower_components/jquery/dist/jquery.min.js"></script>
 <script>
     var point,select;
-    //随机一个整数random
+    /**
+     * 随机一个整数random
+     * @param step 随机数的跨度
+     * @param base 随机数的基准点
+     * @constructor
+     */
     function Rnd(step,base){
         if (typeof step !== 'number') throw new Error('Please enter a number!');
-        if (typeof base === 'number' || typeof base === 'string') {this.base = Number(base)} else if(typeof base === 'undefined'){this.base = 0};
+        if (typeof base === 'undefined') {
+            this.base = 0;
+        } else {
+            this.base = base;
+        }
         this.step = step;
     }
-    Rnd.prototype.floor = function(){
-        return Math.floor(Math.random()*this.step+this.base)
-    };
-    Rnd.prototype.ceil = function(){
-        return Math.ceil(Math.random()*this.step+this.base)
-    };
-    Rnd.prototype.toFixed = function(fix){
-        if (typeof fix !== 'number') throw new Error('Please enter a number!');
-        return (Math.random()*this.step+this.base).toFixed(fix)
-    }
-    //todo 替换下面所有Math.random()
-
-
-    //球的值
-    const balloons = [
-        {
-            index:0,
-            score:1,
-            bgX:'0px',
-            speed:1
-        },{
-            index:1,
-            score:2,
-            bgX:'-81px',
-            speed:1.5
-        },{
-            index:2,
-            score:3,
-            bgX:'-162px',
-            speed:2
-        },{
-            index:3,
-            score:4,
-            bgX:'-244px',
-            speed:2.5
-
-        },{
-            index:4,
-            score:5,
-            bgX:'-324px',
-            speed:3
-        },{
-            index:5,
-            score:6,
-            bgX:'-405px',
-            speed:4
-        },{
-            index:6,
-            score:7,
-            bgX:'-487px',
-            speed:5
-        },{
-            index:7,
-            score:8,
-            bgX:'-569px',
-            speed:6
-        },{
-            index:8,
-            score:function(v){
-                v/=2;
-                v = Math.ceil(v);
-                return v;
-            },
-            bgX:'-651px',
-            speed:(function(){
-                return (Math.random()*3+3).toFixed(1)
-            })()
-        },{
-            index:9,
-            score:function(v){
-                return v*2;
-            },
-            bgX:'-732px',
-            speed:(function(){
-                return (Math.random()*3+3).toFixed(1);
-            })()
-        },{
-            index:10,
-            score:function(){
-                return 0;
-            },
-            bgX:'-812px',
-            speed:(function(){
-                return (Math.random()*6).toFixed(1);
-            })()
-        },{
-            index:11,
-            score:function(v){
-                var rnd = Math.floor(Math.random()*11);
-                var bs = balloons[rnd].score;
-                if (typeof bs === 'number'){
-                    v += 2*bs;
-                    return v
-                } else {
-                    return bs(v);
-                }
-            },
-            bgX:'-894px',
-            speed:(function(){
-                return (Math.random()*6).toFixed(1);
-            })()
+    /**
+     * Rnd的prototype
+     * @type {{floor: Rnd.floor, ceil: Rnd.ceil, toFixed: Rnd.toFixed}}
+     */
+    Rnd.prototype = {
+        floor:function(){
+            return Math.floor(Math.random()*this.step+this.base)
+        },
+        ceil:function(){
+            return Math.ceil(Math.random()*this.step+this.base)
+        },
+        toFixed:function(fix){
+            if (typeof fix !== 'number') throw new Error('Please enter a number!');
+            return (Math.random()*this.step+this.base).toFixed(fix)
         }
-    ];
+    };
 
     //球
     function Balloon(){
+        //球的值
+        var balloons = [
+            {
+                index:0,
+                score:1,
+                bgX:'0px',
+                speed:(function(){
+                    var rnd = new Rnd(2);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:1,
+                score:2,
+                bgX:'-81px',
+                speed:(function(){
+                    var rnd = new Rnd(2,1);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:2,
+                score:3,
+                bgX:'-162px',
+                speed:(function(){
+                    var rnd = new Rnd(2,1.5);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:3,
+                score:4,
+                bgX:'-244px',
+                speed:(function(){
+                    var rnd = new Rnd(2,2);
+                    return rnd.toFixed(1)
+                })()
+
+            },{
+                index:4,
+                score:5,
+                bgX:'-324px',
+                speed:(function(){
+                    var rnd = new Rnd(2,2.5);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:5,
+                score:6,
+                bgX:'-405px',
+                speed:(function(){
+                    var rnd = new Rnd(2,3);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:6,
+                score:7,
+                bgX:'-487px',
+                speed:(function(){
+                    var rnd = new Rnd(2,3.5);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:7,
+                score:8,
+                bgX:'-569px',
+                speed:(function(){
+                    var rnd = new Rnd(2,4);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:8,
+                score:function(v){
+                    v/=2;
+                    v = Math.ceil(v);
+                    return v;
+                },
+                bgX:'-651px',
+                speed:(function(){
+                    var rnd = new Rnd(3,4);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:9,
+                score:function(v){
+                    return v*2;
+                },
+                bgX:'-732px',
+                speed:(function(){
+                    var rnd = new Rnd(3,4);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:10,
+                score:function(){
+                    return 0;
+                },
+                bgX:'-812px',
+                speed:(function(){
+                    var rnd = new Rnd(7);
+                    return rnd.toFixed(1)
+                })()
+            },{
+                index:11,
+                score:function(v){
+                    var rnd = Math.floor(Math.random()*11);
+                    var bs = balloons[rnd].score;
+                    if (typeof bs === 'number'){
+                        v += 2*bs;
+                        return v
+                    } else {
+                        return bs(v);
+                    }
+                },
+                bgX:'-894px',
+                speed:(function(){
+                    var rnd = new Rnd(7);
+                    return rnd.toFixed(1)
+                })()
+            }
+        ];
+
         var rnd = new Rnd(12);
         var n = rnd.floor();  //原来用 this.n
 
         this.b = balloons[n]; //原来用 this.n
-        this.left = Math.random()*100 + '%';
+        this.left = Math.random()*95 + '%';
         this.speed = this.b.speed;
 
-//        var score = this.score();
         this.init();
-
-//        this.move();
     }
     //初始化气球
     Balloon.prototype.init = function(){
-//        console.log(this.b);
         var that = this;
         this.dom = $('<div></div>').addClass('balloon').css({
             'background-position-x':this.b.bgX,
@@ -279,15 +326,15 @@
     };
     //炸
     Balloon.prototype.pop = function(){
-        clearInterval(this.timer);
+        clearInterval(this.ownTimer);
         this.dom.remove();
     };
     //飞
     Balloon.prototype.up = function(){
         var speed = this.speed;
         var that = this;
-        console.log(select.val());
-        var ownTimer = setInterval(function () {
+//        console.log(select);
+        this.ownTimer = setInterval(function () {
             that.dom.css({
                 top:function(i,v){
                     return (parseInt(v)-speed*select.val())+'px'
@@ -295,7 +342,7 @@
             });
             if (parseInt(that.dom.css('top')) < 0){
                 that.pop();
-                clearInterval(ownTimer)
+                clearInterval(that.ownTimer)
             }
         },20)
     };
@@ -314,6 +361,7 @@
     $('#yes').one('click',function(){
         $('.confirmBox h2').text("Let's Play Again!!")
     }).on('click',function(){
+        $('.score').text(0);
         $('.confirmBox').hide();
         select = $('#level').find('option:selected');
         $('#selectLevel').val(select.text());
@@ -341,21 +389,40 @@
     });
     //提交成绩
     $('#resultSubmit').on('click',function (e) {
-        console.log('hey');
-        var result = $('#score').val();
-        var option = $('#selectLevel').val();
+        var level = select.text();  //可以直接用$('#yes')里的
         var name = $('#name').val();
-        if (name === ''){
-            $('#name').val('无名氏')
+        var fs = $('#score').val();
+        var result = {
+            name:name,
+            score:fs
+        };
+        var cache;
+
+        if (typeof localStorage[level] !== 'undefined'){
+            cache = localStorage[level];
+            cache = JSON.parse(cache);
+            cache.push(result);
+            cache.sort(function(a,b){
+                return b['score'] - a['score']
+            });
+            //判断长度，踢掉分值最低那位
+            if (cache.length > 10){
+                cache.pop()
+            }
+
+            cache = JSON.stringify(cache);
+            localStorage[level] = cache;
+        } else {
+            cache = [];
+            cache.push(result);
+            cache = JSON.stringify(cache);
+            localStorage[level] = cache;
         }
-        console.log(option,name,result);
+
         $('.inputName').hide();
         $('.confirmBox').show();
         e.preventDefault();
     })
-
-
-    //todo localStorage储存数据，记得用json格式
 </script>
 </body>
 </html>

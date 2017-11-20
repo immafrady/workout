@@ -23,3 +23,15 @@
 否则会刷新网页
 
 ### 5. 用短路方式赋值，报错Invalid Left-hand Side？
+---
+    var a;
+    //undefined
+    typeof a === 'undefined' && a = 0;
+    //Uncaught ReferenceError: Invalid left-hand side in assignment
+
+因为`=`的优先级比`&&`高，所以所谓的“左手侧”是`typeof a === 'undefined && a`，此处不能成立。
+换成`typeof a === 'undefined' && (a = 0)`或者是`a = (typeof a === 'undefined' && 0)`（后者括号可以不写）即可。
+
+### 6. 随机数据的生成
+---
+放在要多次激活的函数里面，这样每次激活都会随机产生一个数据。
