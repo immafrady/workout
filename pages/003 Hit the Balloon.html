@@ -100,7 +100,7 @@
             font-size: 15px;
             height: 300px;
             display: flex;
-            justify-content: space-around;
+            justify-content: flex-start;
             flex-direction: column;
         }
         .board ul li{
@@ -109,7 +109,7 @@
             flex-direction: row;
             justify-content:space-around;
             color: #888888;
-            margin: 0 auto;
+            margin: 5px auto;
         }
         .board ul li:first-child{
             font-size: 20px;
@@ -211,6 +211,7 @@
      */
     function Rnd(step,base){
         if (typeof step !== 'number') throw new Error('Please enter a number!');
+
         if (typeof base === 'undefined') {
             this.base = 0;
         } else {
@@ -492,18 +493,18 @@
                 $('<li><div>'+ n +'</div><div>'+ leaderboard[i].name+'</div><div>'+ leaderboard[i].score +'</div></li>').appendTo('.board ul')
             }
         }
-    //todo 这里还要写一点
-
         $('.confirmBox').hide();
         $('.leaderboard').show()
     });
     $('#back').on('click',function(){
+        $('.leaderboard').hide();
+        $('.board ul li:gt(0)').remove();
         $('.confirmBox').show();
-        $('.leaderboard').hide()
+
     });
     $('#clear').on('click',function(){
         localStorage.clear();
-        $('.board ul:not(:first-child)').remove();
+        $('.board ul li:not(:first-child)').remove();
     })
 </script>
 </body>
