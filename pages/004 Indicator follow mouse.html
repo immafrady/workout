@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>004 Indicator follow mouse</title>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
+    <style>
+        body,html{
+            height: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        ul{
+            display: flex;
+            flex-direction: row;
+            align-content: stretch;
+            position: relative;
+            left: 0;
+            top: 0;
+        }
+        li{
+            width: 100px;
+            line-height:40px;
+            text-align: center;
+        }
+        .ind{
+            display: none;
+            width: 100px;
+            height: 2px;
+            background-color: #ff0000;
+            position: absolute;
+            top: 38px;
+            left: 0;
+            transition: left 0.3s;
+        }
+        .li-1:hover ~ .ind{
+            display: block;
+        }
+        .li-2:hover ~ .ind{
+            display: block;
+            left:100px;
+        }
+        .li-3:hover ~ .ind{
+            display: block;
+            left:200px;
+        }
+        .li-4:hover ~ .ind{
+            display: block;
+            left:300px;
+        }
+        .li-5:hover ~ .ind{
+            display: block;
+            left:400px;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li class="li-1">四个字的</li>
+    <li class="li-2">句子到底</li>
+    <li class="li-3">有多少呢</li>
+    <li class="li-4">呵呵呵呵</li>
+    <li class="li-5">哈哈哈哈</li>
+    <li class="ind"></li>
+</ul>
+</body>
+</html>
