@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
+    <title>008 Canvas</title>
+    <style>
+        #canvas{
+            border: #999999 solid 1px;
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="450" height="500">
+    Your browser do not support Canvas
+</canvas>
+<script src="./../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="./../bower_components/jcanvas/dist/jcanvas.js"></script>
+<script>
+    //使用了jCanvas
+//    $('#canvas').drawImage({
+//        source:'./src/008/01.jpg',
+//        x:0,y:0,
+//        scale:2
+//    }).drawImage({
+//        source:'./src/008/02.png',
+//        x:0,y:150,
+//        width:300,
+//        height:150
+//    }).drawImage({
+//        source:'./src/008/03.jpg',
+//        x:0,y:300,
+//        width:300,
+//        height:150
+//    })
+
+//    使用原生
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var img1 = img2 = img3 = new Image();
+
+    window.onload =function () {
+        img1.src = './src/008/01.jpg';
+        img2.src = './src/008/02.png';
+        img3.src = './src/008/03.jpg';
+
+        img1.onload = function(){
+            context.drawImage(img1,0,0)
+        };
+    }
+</script>
+</body>
+</html>
