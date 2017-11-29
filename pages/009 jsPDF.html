@@ -7,5 +7,15 @@
 </head>
 <body>
     <!--todo 利用plupload上传，基于上传了的图片，再用jsPDF合成PDF-->
+    <script src="./../bower_components/jspdf/dist/jspdf.min.js"></script>
+    <script>
+        var doc = new jsPDF();
+        doc.text('hahahahahahhahhahahaha',10,10);
+        doc.addPage();
+        doc.text('nonononon',10,10);
+        doc.setPage(1);
+        doc.addPage('hohohoho',30,10);
+        console.log(doc)
+    </script>
 </body>
 </html>
