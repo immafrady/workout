@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>011 Vue workout</title>
+</head>
+<body>
+<div id="app">
+    <test-item></test-item>
+    <ol>
+        <li v-for="todo in todos">{{ todo.item}}</li>
+    </ol>
+    <input v-model="msg">
+    <button v-on:click="inputData">插入</button>
+</div>
+<script src="./libs/vue.js"></script>
+<script>
+    const app = new Vue({
+        el:'#app',
+        data:{
+            todos: [
+                {item:'haha'},
+                {item:'hehe'}
+            ]
+        },
+        methods:{
+            inputData:function () {
+                this.todos.push({item:this.msg})
+            },
+        }
+    });
+    Vue.component('test-item',{
+        template:'<p>哈哈原来Vue是这么简单的</p>'
+    })
+</script>
+</body>
+</html>
