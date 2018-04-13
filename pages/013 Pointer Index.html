@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pointer Index</title>
+    <style>
+        html,body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        .pointer-box {
+            position: relative;
+            width: 100%;
+            height: 32px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+        .pointer-item {
+            flex:1;
+            text-align: center;
+            position: relative;
+            line-height: 32px;
+            background-color: #cacaca;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .pointer-item:not(:last-child):after {
+            content: '';
+            display: block;
+            position: absolute;
+            right: -16px;
+            top: 0;
+            z-index: 999;
+
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid transparent;
+            border-left: 16px solid #cacaca;
+        }
+        .pointer-item:not(:first-child):before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 1px;
+            top: 0;
+            z-index: 998;
+
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid transparent;
+            border-left: 16px solid #fff;
+        }
+        .pointer-item.completed {
+            background-color: #ef9c9d;
+        }
+        .pointer-item.completed:after {
+            border-left-color: #ef9c9d;
+        }
+        .pointer-item.doing {
+            background-color: #f13a3a;
+        }
+        .pointer-item.doing:after {
+            border-left-color: #f13a3a;
+        }
+    </style>
+</head>
+<body>
+<div class="pointer-box">
+    <div class="pointer-item completed">1</div>
+    <div class="pointer-item completed">2</div>
+    <div class="pointer-item completed">3</div>
+    <div class="pointer-item doing">4</div>
+    <div class="pointer-item">5</div>
+    <div class="pointer-item">6</div>
+    <div class="pointer-item">7</div>
+    <div class="pointer-item">8</div>
+</div>
+</body>
+</html>

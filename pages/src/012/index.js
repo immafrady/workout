@@ -22,5 +22,5 @@ mousePosition = (ev) => {
 document.body.addEventListener("mousemove",ev => {
     const filter = divFilter.style;
     const now = mousePosition(ev);
-    filter.cssText = `background: radial-gradient(circle at ${now.x}px ${now.y}px , rgba(0,0,0,0) 0%, rgba(0,0,0,0.98) 20%)`
+    filter.cssText = `background: radial-gradient(circle at ${now.x}px ${now.y}px , rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 25%)`
 },true);
